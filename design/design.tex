@@ -1,0 +1,70 @@
+% Preamble.
+\documentclass[12pt]{article}
+\usepackage[utf8x]{inputenc}
+\usepackage{color,
+            hyperref,
+            fancyhdr,
+            xcolor,
+            enumitem,
+            amssymb,  % More math commands.
+            amsmath,
+            tikz,
+            changepage,
+            algorithmic,
+            }
+\usepackage[textwidth=16.625cm]{geometry}
+\usepackage{graphicx}
+\usepackage[ruled]{algorithm2e}
+\usepackage{tikz-qtree}
+
+% Commands.
+\renewcommand{\headrulewidth}{0.0pt}
+\newcommand{\ts}{\textsuperscript}
+\newcommand{\ul}{\underline}
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+\def\checkmark{\tikz\fill[scale=0.4](0,.35) -- (.25,0) -- (1,.7) -- (.25,.15) -- cycle;} % Checkmark
+\def\code#1{\texttt{#1}}  % Write code.
+% Email Command.
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+% Style.
+\pagestyle{fancy}
+\chead{CSC 460 -- Database Design\\ Fall 2021 (McCann)}
+\cfoot{\thepage}
+\urlstyle{same}
+% Link Style.
+\hypersetup{colorlinks,
+            urlcolor=[RGB]{6, 69, 173},
+            linkbordercolor=[RGB]{6, 69, 173},
+            pdfborderstyle={/S/U/W 1}
+            }
+% Set wider margins to give more text per page.
+\setlength{\topmargin}{-0.50in}     % in == inches (others:  cm, mm, pt, ...)
+\setlength{\textheight}{9.25in}     % what's left-over is the bottom margin
+\setlength{\textwidth}{6.625in}
+\setlength{\oddsidemargin}{0.0in}   % right-side pages in a magazine
+\setlength{\evensidemargin}{0.0in}  % left-side
+
+\setlength{\parindent}{0.0cm}	    % don't indent first lines of paragraphs
+\setlength{\parskip}{0.4cm}         % distance between paragraphs
+
+% Body.
+\begin{document}
+
+% Header Stuff.
+\begin{center}
+{\Large \textbf{Program \#4: Database Design and Implementation}}\\
+\textit{Due Date: November 29\ts{th}, 2021, \underline{at the beginning of class}}
+
+\ul{Danny Ryngler -- \code{\email{dryngler@email.arizona.edu}}}
+\ul{James O'Connell -- \code{\email{oconnellj2@email.arizona.edu}}}
+\end{center}
+
+\section*{1  Conceptual Database Design}
+\fbox{\begin{minipage}{6.53in}
+	E--R Diagram(Draft):
+
+\end{minipage}}
+
+\end{document}

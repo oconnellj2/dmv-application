@@ -1,0 +1,13 @@
+# LaTeX files.
+design.aux
+design.fdb_latexmk
+design.fls
+design.log
+design.out
+design.synctex.gz
+er.jpeg
+
+# Development files.
+*.class
+.DS_Store
+.classpath
