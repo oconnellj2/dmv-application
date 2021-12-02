@@ -2,7 +2,6 @@ import java.sql.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Scanner;
 
 /**
@@ -47,20 +46,42 @@ public class Prog4 {
 		"[6] Cancel an appointment.\n" +
 		"[7] Change an appointment service.\n" +
 		"[8] Add a user.\n" +
-		"[9] Update a user.\n" +
-		"[10] Delete a user.\n" +
-		"[11] Add an employee.\n" +
+		"[9] Delete a user.\n" +
+		"[10] Add an employee.\n" +
+		"[11] Delete an employee.\n" +
 		"[12] Update an employee.\n" +
-		"[13] Delete an employee.\n" +
-		"[14] Add a service.\n" +
+		"[13] Add a service.\n" +
+		"[14] Delete a service.\n" +
 		"[15] Update a service.\n" +
-		"[16] Delete a service.\n" +
-		"Enter 1-16 to make a query, or type exit.\n";
+		"Enter 1-15 to make a query, or type exit.\n";
 	// Queries.
 	private static final String q1 = "";
 	private static final String q2 = "";
 	private static final String q3 = "";
 	private static final String q4 = "";
+
+	/**
+	 * Execute insert/update/delete.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param query - String reprsents query.
+	 */
+	private static void execute(Connection dbconn, Statement stmt, String query) {
+		try {
+			// Execute query.
+			stmt = dbconn.createStatement();
+			stmt.executeUpdate(query);
+			System.out.println("Your appointment has been made!");
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println("*** SQLException:  "
+			+ "Could not fetch query results.");
+			System.err.println("\tMessage:   " + e.getMessage());
+			System.err.println("\tSQLState:  " + e.getSQLState());
+			System.err.println("\tErrorCode: " + e.getErrorCode());
+			System.exit(-1);
+		}
+	}
 	/**
 	 * Connects the user to the DBMS.
 	 * @param args - Command line arguments that hold the username nad password.
@@ -272,13 +293,13 @@ public class Prog4 {
 	}
 
 	/**
-	 * 
-	 * @param dbconn
-	 * @param stmt
-	 * @param answer
-	 * @param input
+	 * Execute appointment insert from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
 	 */
-	private static void insert(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+	private static void insertApp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
 		// Get user id.
 		String id = null;
 		while(true){
@@ -288,27 +309,47 @@ public class Prog4 {
 			try {
 				Integer.parseInt(id);
 				break;
-			}
-			catch (NumberFormatException e) {
-				System.out.println("Error:\tInvalid user ID!");
-				continue;
+			} catch (NumberFormatException e) {
+				System.err.println("Error:\tInvalid user ID!");
 			}
 		}
-		// Get service from user.
-		String service = null;
-		int serviceID;
-		HashMap<String, Integer> services = new HashMap<>();
-		services.put("permit", 1);
-		services.put("licence", 2);
-		services.put("registration", 3);
-		services.put("id", 4);
+		String insertApp = "";
+		String query = String.format(insertApp, id);
+		try {
+			// Execute query.
+			stmt = dbconn.createStatement();
+			stmt.executeUpdate(query);
+			System.out.println("Your appointment has been made!");
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println("*** SQLException:  "
+			+ "Could not fetch query results.");
+			System.err.println("\tMessage:   " + e.getMessage());
+			System.err.println("\tSQLState:  " + e.getSQLState());
+			System.err.println("\tErrorCode: " + e.getErrorCode());
+			System.exit(-1);
+		}
+	}
+
+	/**
+	 * Execute appointment delete from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void deleteApp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get user id.
+		String id = null;
 		while(true){
-			System.out.print("Enter desired service: ");
-			service = input.nextLine();
-			if(services.containsKey(service.toLowerCase())){
-				
-			} else {
-				System.out.println("Error:\tInvalid service!");
+			System.out.print("Enter user ID: ");
+			id = input.nextLine();
+			// Validate user id.
+			try {
+				Integer.parseInt(id);
+				break;
+			} catch (NumberFormatException e) {
+				System.err.println("Error:\tInvalid user ID!");
 			}
 		}
 		// String query = String.format(insertApp, id, service);
@@ -327,6 +368,171 @@ public class Prog4 {
 		// 	System.exit(-1);
 		// }
 	}
+
+	/**
+	 * Execute appointment update from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void updateApp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get user id.
+		String id = null;
+		while(true){
+			System.out.print("Enter user ID: ");
+			id = input.nextLine();
+			// Validate user id.
+			try {
+				Integer.parseInt(id);
+				break;
+			} catch (NumberFormatException e) {
+				System.err.println("Error:\tInvalid user ID!");
+			}
+		}
+		// String query = String.format(insertApp, id, service);
+		// try {
+		// 	// Execute query.
+		// 	stmt = dbconn.createStatement();
+		// 	stmt.executeUpdate(query);
+		// 	System.out.println("Your appointment has been made!");
+		// 	stmt.close();
+		// } catch (SQLException e) {
+		// 	System.err.println("*** SQLException:  "
+		// 	+ "Could not fetch query results.");
+		// 	System.err.println("\tMessage:   " + e.getMessage());
+		// 	System.err.println("\tSQLState:  " + e.getSQLState());
+		// 	System.err.println("\tErrorCode: " + e.getErrorCode());
+		// 	System.exit(-1);
+		// }
+	}
+
+	/**
+	 * Execute User insert from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void insertUser(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get user first and last name.
+		System.out.print("Enter first name: ");
+		String firstName = input.nextLine();
+		System.out.print("Enter last name: ");
+		String lastName = input.nextLine();
+
+		String query = "insert into customer values (customer_seq.nextval, " + firstName + ", "+ lastName +") ";
+		execute(dbconn, stmt, query);
+	}
+
+	/**
+	 * Execute User delete from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void deleteUser(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get user id.
+		System.out.print("Enter user ID number: ");
+		String custID = input.nextLine();
+
+		String query = "delete from customer where cust_id = " + custID;
+		execute(dbconn, stmt, query);
+	}
+
+	/**
+	 * Execute Employee insert from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void insertEmp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get job and dept id.
+		System.out.print("Enter Job ID: ");
+		String jobId = input.nextLine();
+		System.out.print("Enter Department ID: ");
+		String deptId = input.nextLine();
+
+		String query = "insert into Employee values (employee_seq.nextval, 1, 1, "+jobId+", "+deptId+")";
+		execute(dbconn, stmt, query);
+	}
+
+	/**
+	 * Execute Employee delete from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void deleteEmp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get employee id from user.
+		System.out.print("Enter Employee ID number: ");
+		String empID = input.nextLine();
+
+		String query = "delete from Employee where eid = " + empID;
+		execute(dbconn, stmt, query);
+	}
+
+	/**
+	 * Execute Employee update from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void updateEmp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		
+	}
+
+	/**
+	 * Execute Service insert from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void insertSvc(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get Service name, fee and lifetime.
+		System.out.print("Enter a Service name: ");
+		String svcName = input.nextLine();
+		System.out.print("Enter a Service fee: ");
+		String fee = input.nextLine();
+		System.out.print("Enter number of years vaild: ");
+		String lifetime = input.nextLine();
+
+		String query = "insert into service values (service_seq.nextval, "+svcName+", "+fee+", "+lifetime+")";
+		execute(dbconn, stmt, query);
+	}
+
+	/**
+	 * Execute Service delete from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void deleteSvc(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get service name from user.
+		System.out.print("Enter Service name: ");
+		String svcName = input.nextLine();
+
+		String query = "delete from service where name = " + svcName;
+		execute(dbconn, stmt, query);
+	}
+
+	/**
+	 * Execute Service update from user.
+	 * @param dbconn - Current connection with database.
+	 * @param stmt - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get school name from the user.
+	 */
+	private static void updateSvc(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		
+	}
+
 	/**
 	 * Main Driver function which handles the connection to the DB and prompts the
 	 * user for questions to ask then answered by the DB.
@@ -367,28 +573,37 @@ public class Prog4 {
 				query4(dbconn, stmt, answer, input);
 			} else if(buff.equals("5")){
 				// Insert appointment record.
+				insertApp(dbconn, stmt, answer, input);
 			} else if(buff.equals("6")){
 				// Delete appointment record.
+				deleteApp(dbconn, stmt, answer, input);
 			} else if(buff.equals("7")){
 				// Update appointment record.
+				updateApp(dbconn, stmt, answer, input);
 			}  else if(buff.equals("8")){
 				// Insert user record.
+				insertUser(dbconn, stmt, answer, input);
 			} else if(buff.equals("9")){
 				// Delete user record.
+				deleteUser(dbconn, stmt, answer, input);
 			} else if(buff.equals("10")){
-				// Update user record.
-			} else if(buff.equals("11")){
 				// Insert employee record.
-			} else if(buff.equals("12")){
+				insertEmp(dbconn, stmt, answer, input);
+			} else if(buff.equals("11")){
 				// Delete employee record.
-			} else if(buff.equals("13")){
+				deleteEmp(dbconn, stmt, answer, input);
+			} else if(buff.equals("12")){
 				// Update employee record.
-			}  else if(buff.equals("14")){
+				updateEmp(dbconn, stmt, answer, input);
+			}  else if(buff.equals("13")){
 				// Insert service record.
-			} else if(buff.equals("15")){
+				insertSvc(dbconn, stmt, answer, input);
+			} else if(buff.equals("14")){
 				// Delete service record.
-			} else if(buff.equals("16")){
+				deleteSvc(dbconn, stmt, answer, input);
+			} else if(buff.equals("15")){
 				// Update service record.
+				updateSvc(dbconn, stmt, answer, input);
 			}else if(buff.equals("exit")){
 				// Close and exit.
 				input.close();
