@@ -31,7 +31,7 @@ import java.util.Scanner;
  *        users aloe user name and password respectivly:
  *        $ java Prog4 <username> <password>
  * 
- * @Examples
+ * @Example
  *           $ export
  *           CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
  *           $ javac Prog4.java
@@ -227,6 +227,7 @@ public class Prog4 {
 			}
 			break;
 		}
+		// TODO: Implement query1.
 		String query = "";
 		execute(dbconn, stmt, query);
 
@@ -287,6 +288,7 @@ public class Prog4 {
 			}
 			break;
 		}
+		// TODO: Implement query3.
 		String query = "";
 		execute(dbconn, stmt, query);
 	}
@@ -350,6 +352,7 @@ public class Prog4 {
 				System.err.println("Error:\tInvalid user ID!");
 			}
 		}
+		// TODO: Implement insert appointment.
 		String query = "";
 		execute(dbconn, stmt, query);
 	}
@@ -376,6 +379,7 @@ public class Prog4 {
 				System.err.println("Error:\tInvalid user ID!");
 			}
 		}
+		// TODO: Implement delete appointment.
 		String query = "";
 		execute(dbconn, stmt, query);
 	}
@@ -402,6 +406,7 @@ public class Prog4 {
 				System.err.println("Error:\tInvalid user ID!");
 			}
 		}
+		// TODO: Implement update appointment.
 		String query = "";
 		execute(dbconn, stmt, query);
 	}
@@ -487,7 +492,7 @@ public class Prog4 {
 	 * @param input  - Scanner used to get school name from the user.
 	 */
 	private static void updateEmp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-
+		// TODO: Implement update employee.
 	}
 
 	/**
@@ -538,7 +543,7 @@ public class Prog4 {
 	 * @param input  - Scanner used to get school name from the user.
 	 */
 	private static void updateSvc(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-
+		// TODO: Implement update service.
 	}
 
 	/**
