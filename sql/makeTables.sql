@@ -7,6 +7,7 @@ drop table Customer;
 drop table Appointment;
 drop table Xact;
 drop table Service;
+drop table Document;
 drop table Permit;
 drop table License;
 drop table Registration;
@@ -19,6 +20,7 @@ drop sequence customer_seq;
 drop sequence appointment_seq;
 drop sequence xact_seq;
 drop sequence service_seq;
+drop sequence document_seq;
 drop sequence permit_seq;
 drop sequence license_seq;
 drop sequence registration_seq;
@@ -58,6 +60,16 @@ CREATE TABLE Service (
 	primary key(service_id)
 );
 
+CREATE TABLE Document (
+	did number not null,
+	service_id number, 
+	cust_id number,
+	issue_date date not null,
+	expiration_date date not null,
+	primary key(did)
+);
+
+/*
 CREATE TABLE Permit (
 	pid number not null,
 	cust_id number,
@@ -89,6 +101,7 @@ CREATE TABLE StateId (
 	expiration_date date not null,
 	primary key(stid)
 );
+*/
 
 CREATE TABLE Job (
 	jid number not null,
@@ -136,6 +149,13 @@ CREATE SEQUENCE service_seq
   INCREMENT BY 1
   CACHE 20;
 
+CREATE SEQUENCE document_seq
+  MINVALUE 1
+  START WITH 1
+  INCREMENT BY 1
+  CACHE 20;
+
+/*
 CREATE SEQUENCE permit_seq
   MINVALUE 1
   START WITH 1
@@ -159,6 +179,7 @@ CREATE SEQUENCE stateId_seq
   START WITH 1
   INCREMENT BY 1
   CACHE 20;
+*/
 
 CREATE SEQUENCE job_seq
   MINVALUE 1
