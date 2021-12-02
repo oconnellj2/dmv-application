@@ -106,7 +106,7 @@ CREATE TABLE StateId (
 CREATE TABLE Job (
 	jid number not null,
 	title varchar2(100),
-	salaray number,
+	salary number,
 	primary key(jid)
 );
 

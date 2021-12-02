@@ -195,10 +195,82 @@
 \newpage
 \section*{2 Logical database design}
 
+\begin{center}
+\begin{minipage}{0.5\linewidth}
+Customer
+\begin{tabular}[l]{|c|c|c|}
+	\hline
+	\ul{cust\_id} &first\_name &last\_name\\
+	\hline
+\end{tabular}\\
+
+Appointment
+\begin{tabular}[l]{|c|c|c|c|c|}
+	\hline
+	\ul{app\_id} &cust\_id &service\_id &app\_date &success\\
+	\hline
+\end{tabular}\\
+
+Xact
+\begin{tabular}[l]{|c|c|c|}
+	\hline
+	\ul{xact\_id} &app\_id &fee\\
+	\hline
+\end{tabular}\\
+
+Service
+\begin{tabular}[l]{|c|c|c|c|}
+	\hline
+	\ul{service\_id} &name &fee &years\_valid\\
+	\hline
+\end{tabular}\\
+
+Document
+\begin{tabular}[l]{|c|c|c|c|c|}
+	\hline
+	\ul{did} &service\_id &cust\_id &issue\_date &expiration\_date\\
+	\hline
+\end{tabular}\\
+
+Job
+\begin{tabular}[l]{|c|c|c|}
+	\hline
+	\ul{jid} &title &salary\\
+	\hline
+\end{tabular}\\
+
+Employee
+\begin{tabular}[l]{|c|c|c|c|c|}
+	\hline
+	\ul{eid} &jid &did &first\_name &last\_name\\
+	\hline
+\end{tabular}\\
+
+Department
+\begin{tabular}[l]{|c|c|}
+	\hline
+	\ul{did} &name\\
+	\hline
+\end{tabular}
+
+\end{minipage}
+\end{center}
+
 \newpage
 \section*{3 Normalization analysis}
 
 \newpage
 \section*{4 Query description}
 
+\begin{center}
+	\begin{minipage}{0.5\linewidth}
+	\code{SELECT salary\\
+	FROM Job, Employee\\
+	WHERE Job.jid $=$ Employee.jid\\
+	AND Employee.first\_name $=$ `\%s'\\
+	AND Employee.last\_name $=$ `\%s'}
+	\end{minipage}
+\end{center}
+
+\tab Our self--designed query answers the question: ``What is the salary of a given Employee''. Given the first and last name from the user and by preforming a join on the Employee and Job relations, we are able to determine the answer to this question. The utility of the query allows users to get insight into the people that work at the DMV.
 \end{document}
