@@ -56,7 +56,8 @@ public class Prog4 {
 		"Enter 1-15 to make a query, or type exit.\n";
 	// Queries.
 	private static final String q1 = "";
-	private static final String q2 = "";
+	private static final String q2 = "select service_id, count(success) from " +
+									 "dryngler.Appointment where success = 1 group by service_id";
 	private static final String q3 = "";
 	private static final String q4 = "";
 
@@ -189,6 +190,7 @@ public class Prog4 {
 				// Output data about query.
 				System.out.println();
 				int count = 0;
+				System.out.println("SERVICE_ID \t UNSUCCESSFUL APPOINTMENTS");
 				while(answer.next()){
 					System.out.println(answer.getString(1)+" \t "+answer.getString(2));
 					count++;
