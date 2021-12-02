@@ -190,6 +190,9 @@ public class Prog4 {
 				// Output data about query.
 				System.out.println();
 				int count = 0;
+
+				printResults(answer, {0,0});
+
 				System.out.println("SERVICE_ID \t UNSUCCESSFUL APPOINTMENTS");
 				while(answer.next()){
 					System.out.println(answer.getString(1)+" \t "+answer.getString(2));
@@ -535,6 +538,66 @@ public class Prog4 {
 		
 	}
 
+	/*                                                                                                                                                                                                                                                                                                     
+   * Purpose: Print the ResultSet from a query. The column names are printed first and then each tuple thereafter. 
+   * The width of columns is found with getColumnDisplaySize(). 
+   * Params: ResultSet answer: to be printed
+   *         int[] dtypes: datatype of each column represented by bits to know whether to call getInt(), getString(), or getDouble()
+   *                       value in array mean -> 0 : string; 1: int; -1 : double
+   */
+  void printResults(ResultSet answer, int[] dtypes){
+    try {
+      System.out.println();
+      ResultSetMetaData answermetadata = answer.getMetaData();
+      for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
+          String name = answermetadata.getColumnName(i);
+          if (dtypes[i] == 0) {
+            int width = answermetadata.getColumnDisplaySize(i);
+            System.out.print(name);
+            for (int j = name.length(); j <= width; j++){
+              System.out.print(" ");
+            }
+          } else {
+            System.out.print(name + "\t");
+          }
+      }
+      System.out.println();
+
+      while (answer.next()) {
+          String tuple = "";
+          for (int i = 1; i <= answermetadata.getColumnCount(); i++) {
+              int width = answermetadata.getColumnDisplaySize(i);
+              if (dtypes[i] == 1) {
+                int value = answer.getInt(i);
+                tuple += value;
+                for (int j = String.valueOf(value).length(); j <= answermetadata.getColumnName(i).length() + 4; j++) { // +4 for tab
+                   tuple += " ";
+                } 
+              } else if (dtypes[i] == 0) {
+                tuple += answer.getString(i);
+                for (int j = tuple.length(); j <= width; j++){
+                  tuple += " ";
+                }
+              } else {
+                double dub = Math.round(answer.getDouble(i) * 100.00) / 100.00; //round to 2 decimal places
+                tuple += dub;
+                for (int j = String.valueOf(dub).length(); j <= answermetadata.getColumnName(i).length() + 5; j++) { // +5 for tab and 1 for decimal place in double
+                  tuple += " ";
+                }
+              }
+          }
+          System.out.println(tuple);
+      } 
+    } catch (SQLException e) {
+       System.err.println("SQL Exception...");
+       System.err.println("Message:   " + e.getMessage());
+       System.err.println("SQLState:  " + e.getSQLState());
+       System.err.println("ErrorCode: " + e.getErrorCode());
+       System.exit(-1);  
+    }
+  }
+
+	
 	/**
 	 * Main Driver function which handles the connection to the DB and prompts the
 	 * user for questions to ask then answered by the DB.
