@@ -58,11 +58,16 @@ public class Prog4 {
 			"Enter 1-15 to make a query, or type exit.\n";
 	// Queries.
 	private static final String q1 = "";
-	private static final String q2 = "select service_id, count(success) " +
-			"from dryngler.Appointment where success = 0 and app_date > " +
-			"app_date - 30 group by service_id";
+	private static final String q2 = "select name, count(success) " +
+						"from Appointment, Service " +
+						"where Appointment.service_id = Service.service_id " +
+						"and success = 0 " +
+						"and app_date > app_date - 30 " +
+						"group by name";
 	private static final String q3 = "";
-	private static final String q4 = "";
+	private static final String q4 = "select salary from Job, Employee " +
+						"where Job.jid = Employee.jid and " +
+						"Employee.first_name = '%s' and Employee.last_name = '%s'";
 
 	/**
 	 * Purpose: Print the ResultSet from a query. The column names are printed first
@@ -295,7 +300,32 @@ public class Prog4 {
 	 * @param input  - Scanner used to get school name from the user.
 	 */
 	private static void query4(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-
+		// Get user first and last name.
+		System.out.print("Enter first name: ");
+		String firstName = input.nextLine();
+		System.out.print("Enter last name: ");
+		String lastName = input.nextLine();
+		String query = String.format(q4, firstName, lastName);
+		try {
+			// Execute query.
+			stmt = dbconn.createStatement();
+			answer = stmt.executeQuery(query);
+			if (answer != null) {
+				// Output data about query.
+				int[] dTypes = { 0, 0 };
+				printResults(answer, dTypes);
+			} else {
+				System.out.println("No result returned from query!");
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println("*** SQLException:  "
+					+ "Could not fetch query results.");
+			System.err.println("\tMessage:   " + e.getMessage());
+			System.err.println("\tSQLState:  " + e.getSQLState());
+			System.err.println("\tErrorCode: " + e.getErrorCode());
+			System.exit(-1);
+		}
 	}
 
 	/**
