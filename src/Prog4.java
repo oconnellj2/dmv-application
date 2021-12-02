@@ -1,32 +1,37 @@
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Scanner;
 
 /**
- * Author: James O'Connell
- * Course: CSC 460, Fall 2021
- * Assignment: Program 4: Database Design and Implementation.
- * Instructor: L. McCann
- * Due Date: December 6th, 2021, at the beginning of class.
+ * @Author James O'Connell <oconnellj2@email.arizona.edu>
+ * @Author Danny Ryngler <dryngler@email.arizona.edu>
+ * @Course CSC 460, Fall 2021
+ * @Assignment Program 4: Database Design and Implementation.
+ * @Instructor L. McCann
+ * @DueDate December 6th, 2021, at the beginning of class.
  * 
- * Purpose:
- * 		Using JDBC, this program offers the user a text-based client user
+ * @Purpose Using JDBC, this program offers the user a text-based client user
  * 		interface of a DMV api.
  * 
- * Requirements:
+ * @Requirements
  * 		- Basic understanding / access to the commandline.
  * 		- Java 16 or earlier.
- * Usage:
+ * 
+ * @Usage
  * 		- Add the Oracle JDBC driver to your CLASSPATH environment variable:
  * 		export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
  * 
  * 		- Compile the program:
  * 		$ javac Prog4.java
  * 
- * 		- Finally, Run the program; where <username> and <password> are the users aloe
- * 		user name and password respectivly:
+ * 		- Finally, Run the program; where <username> and <password> are the
+ * 		users aloe user name and password respectivly:
  * 		$ java Prog4 <username> <password>
  * 
- * Examples:
+ * @Examples
  * 		$ export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
  * 		$ javac Prog4.java
  * 		$ java Prog4 <username> <password>
@@ -34,13 +39,23 @@ import java.util.Scanner;
 public class Prog4 {
 	// Menu that gets printed to the user.
 	private static final String menu =
-		"\n[a] List users whose Id's will expire given a date(MM/DD/YYYY).\n" +
-		"[b] For the previous month, count every type of appointment and check how many of them successfully got their IDs.\n" +
-		"[c] Disply the collected fee amount for every department for a given month(MM/YYYY).\n" +
-		"[d] Custom...\n\n" +
-		"Enter a-d to make a query! or...\n" +
-		"Type insert, delete or update to modify data records! or...\n" +
-		"Type exit.";
+		"\n[1] List users whose Id's will expire given a date(MM/DD/YYYY).\n" +
+		"[2] For the previous month, count every type of appointment and check how many of them successfully got their IDs.\n" +
+		"[3] Disply the collected fee amount for every department for a given month(MM/YYYY).\n" +
+		"[4] Custom...\n" +
+		"[5] Make an appointment.\n" +
+		"[6] Cancel an appointment.\n" +
+		"[7] Change an appointment service.\n" +
+		"[8] Add a user.\n" +
+		"[9] Update a user.\n" +
+		"[10] Delete a user.\n" +
+		"[11] Add an employee.\n" +
+		"[12] Update an employee.\n" +
+		"[13] Delete an employee.\n" +
+		"[14] Add a service.\n" +
+		"[15] Update a service.\n" +
+		"[16] Delete a service.\n" +
+		"Enter 1-16 to make a query, or type exit.\n";
 	// Queries.
 	private static final String q1 = "";
 	private static final String q2 = "";
@@ -96,28 +111,46 @@ public class Prog4 {
 	 * @param dbconn - Current connection with database.
 	 * @param stmt - Object used to execture SQL.
 	 * @param answer - Table of data representing the result of the query.
+	 * @param input - Scanner used to get date from the user.
 	 */
-	private static void query1(Connection dbconn, Statement stmt, ResultSet answer) {
-		try {
-			// Execute query.
-			stmt = dbconn.createStatement();
-			answer = stmt.executeQuery(q1);
-			if(answer != null) {
-				// Output data about query.
-				answer.next();
-				System.out.println("Result: "+ answer.getString(1));
-			} else {
-				System.out.println("No result returned from query!");
+	private static void query1(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get date.
+		String date = null;
+		while(true){
+			System.out.print("Enter date(MM/DD/YYYY): ");
+			date = input.nextLine();
+			DateFormat sdf = new SimpleDateFormat("MM/DD/YYYY");
+			sdf.setLenient(false);
+			try {
+				sdf.parse(date);
+				System.out.println(sdf.toString());
+			} catch (ParseException e) {
+				System.err.println("Error:\tEnter a vaild date!");
+				continue;
 			}
-			stmt.close();
-		} catch (SQLException e) {
-			System.err.println("*** SQLException:  "
-			+ "Could not fetch query results.");
-			System.err.println("\tMessage:   " + e.getMessage());
-			System.err.println("\tSQLState:  " + e.getSQLState());
-			System.err.println("\tErrorCode: " + e.getErrorCode());
-			System.exit(-1);
+			break;
 		}
+		// String query = String.format(q1, date);
+		// try {
+		// 	// Execute query.
+		// 	stmt = dbconn.createStatement();
+		// 	answer = stmt.executeQuery(query);
+		// 	if(answer != null) {
+		// 		// Output data about query.
+		// 		answer.next();
+		// 		System.out.println("Result: "+ answer.getString(1));
+		// 	} else {
+		// 		System.out.println("No result returned from query!");
+		// 	}
+		// 	stmt.close();
+		// } catch (SQLException e) {
+		// 	System.err.println("*** SQLException:  "
+		// 	+ "Could not fetch query results.");
+		// 	System.err.println("\tMessage:   " + e.getMessage());
+		// 	System.err.println("\tSQLState:  " + e.getSQLState());
+		// 	System.err.println("\tErrorCode: " + e.getErrorCode());
+		// 	System.exit(-1);
+		// }
 	}
 
 	/**
@@ -162,57 +195,42 @@ public class Prog4 {
 	 * @param input - Scanner used to get year and district name from the user.
 	 */
 	private static void query3(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-		// Get year.
-		String year = null;
+		// Get date.
+		String date = null;
 		while(true){
-			System.out.print("Enter year: ");
-			year = input.next();
-			if(year.equals("2017") || year.equals("2018") || year.equals("2019") || year.equals("2021")){
-				break;
-			} else {
-				System.out.println("Enter a vaild year(2017, 2018, 2019 or 2021)!");
+			System.out.print("Enter date(MM/YYYY): ");
+			date = input.nextLine();
+			DateFormat sdf = new SimpleDateFormat("MM/YYYY");
+			sdf.setLenient(false);
+			try {
+				sdf.parse(date);
+				System.out.println(sdf.toString());
+			} catch (ParseException e) {
+				System.err.println("Error:\tEnter a vaild date!");
+				continue;
 			}
+			break;
 		}
-		// Get District.
-		System.out.print("Enter a district name: ");
-		String district = input.nextLine();
-		district += input.nextLine().toUpperCase();
-		// originally q3_helper instead of q3.
-		String query = String.format(q3, year, district);
-		try {
-			// Execute query to see the number of schools.
-			stmt = dbconn.createStatement();
-			answer = stmt.executeQuery(query);
-			if(answer != null) {
-				int count = 0;
-				while(answer.next()) {
-					count = Integer.parseInt(answer.getString(1));
-				}
-				stmt.close();
 
-				// Check if there are more than 10 schools.
-				if(count >= 10) {
-					// Execute query to get the schools.
-					stmt = dbconn.createStatement();
-					query = String.format(q3, year, district);
-					answer = stmt.executeQuery(query);
-					while(answer.next()) {
-						System.out.println(answer.getString(1)+"\t"+answer.getString(2)+"\t"+answer.getString(3)+"\t"+answer.getString(4)+"\t"+answer.getString(5));
-					}
-				} else {
-					// Not enough schools!
-					System.out.println("I'm sorry, but district "+district+" has just "+count+" schools.");
-				}
-			}
-			stmt.close();
-		} catch (SQLException e) {
-			System.err.println("*** SQLException:  "
-			+ "Could not fetch query results.");
-			System.err.println("\tMessage:   " + e.getMessage());
-			System.err.println("\tSQLState:  " + e.getSQLState());
-			System.err.println("\tErrorCode: " + e.getErrorCode());
-			System.exit(-1);
-		}
+		// String query = String.format(q3, date);
+		// try {
+		// 	// Execute query.
+		// 	stmt = dbconn.createStatement();
+		// 	answer = stmt.executeQuery(query);
+		// 	if(answer != null) {
+		// 		while(answer.next()) {
+		// 			System.out.println(answer.getString(1));
+		// 		}
+		// 	}
+		// 	stmt.close();
+		// } catch (SQLException e) {
+		// 	System.err.println("*** SQLException:  "
+		// 	+ "Could not fetch query results.");
+		// 	System.err.println("\tMessage:   " + e.getMessage());
+		// 	System.err.println("\tSQLState:  " + e.getSQLState());
+		// 	System.err.println("\tErrorCode: " + e.getErrorCode());
+		// 	System.exit(-1);
+		// }
 	}
 
 	/**
@@ -254,6 +272,62 @@ public class Prog4 {
 	}
 
 	/**
+	 * 
+	 * @param dbconn
+	 * @param stmt
+	 * @param answer
+	 * @param input
+	 */
+	private static void insert(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
+		// Get user id.
+		String id = null;
+		while(true){
+			System.out.print("Enter user ID: ");
+			id = input.nextLine();
+			// Validate user id.
+			try {
+				Integer.parseInt(id);
+				break;
+			}
+			catch (NumberFormatException e) {
+				System.out.println("Error:\tInvalid user ID!");
+				continue;
+			}
+		}
+		// Get service from user.
+		String service = null;
+		int serviceID;
+		HashMap<String, Integer> services = new HashMap<>();
+		services.put("permit", 1);
+		services.put("licence", 2);
+		services.put("registration", 3);
+		services.put("id", 4);
+		while(true){
+			System.out.print("Enter desired service: ");
+			service = input.nextLine();
+			if(services.containsKey(service.toLowerCase())){
+				
+			} else {
+				System.out.println("Error:\tInvalid service!");
+			}
+		}
+		// String query = String.format(insertApp, id, service);
+		// try {
+		// 	// Execute query.
+		// 	stmt = dbconn.createStatement();
+		// 	stmt.executeUpdate(query);
+		// 	System.out.println("Your appointment has been made!");
+		// 	stmt.close();
+		// } catch (SQLException e) {
+		// 	System.err.println("*** SQLException:  "
+		// 	+ "Could not fetch query results.");
+		// 	System.err.println("\tMessage:   " + e.getMessage());
+		// 	System.err.println("\tSQLState:  " + e.getSQLState());
+		// 	System.err.println("\tErrorCode: " + e.getErrorCode());
+		// 	System.exit(-1);
+		// }
+	}
+	/**
 	 * Main Driver function which handles the connection to the DB and prompts the
 	 * user for questions to ask then answered by the DB.
 	 * 
@@ -279,24 +353,42 @@ public class Prog4 {
 			buff = input.nextLine();
 
 			// Query users question, or exit.
-			if(buff.equals("a")){
+			if(buff.equals("1")){
 				// Query quesiton a.
-				query1(dbconn, stmt, answer);
-			} else if(buff.equals("b")){
+				query1(dbconn, stmt, answer, input);
+			} else if(buff.equals("2")){
 				// Query quesiton b.
 				query2(dbconn, stmt, answer);
-			} else if(buff.equals("c")){
+			} else if(buff.equals("3")){
 				// Query quesiton c.
 				query3(dbconn, stmt, answer, input);
-			} else if(buff.equals("d")){
+			} else if(buff.equals("4")){
 				// Query quesiton d.
 				query4(dbconn, stmt, answer, input);
-			} else if(buff.equals("insert")){
-				// Insert record.
-			} else if(buff.equals("delete")){
-				// Insert record.
-			} else if(buff.equals("update")){
-				// Insert record.
+			} else if(buff.equals("5")){
+				// Insert appointment record.
+			} else if(buff.equals("6")){
+				// Delete appointment record.
+			} else if(buff.equals("7")){
+				// Update appointment record.
+			}  else if(buff.equals("8")){
+				// Insert user record.
+			} else if(buff.equals("9")){
+				// Delete user record.
+			} else if(buff.equals("10")){
+				// Update user record.
+			} else if(buff.equals("11")){
+				// Insert employee record.
+			} else if(buff.equals("12")){
+				// Delete employee record.
+			} else if(buff.equals("13")){
+				// Update employee record.
+			}  else if(buff.equals("14")){
+				// Insert service record.
+			} else if(buff.equals("15")){
+				// Delete service record.
+			} else if(buff.equals("16")){
+				// Update service record.
 			}else if(buff.equals("exit")){
 				// Close and exit.
 				input.close();
