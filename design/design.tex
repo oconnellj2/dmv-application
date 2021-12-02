@@ -63,133 +63,149 @@
 
 \section*{1  Conceptual Database Design}
 \fbox{\begin{minipage}{6.72in}
-
 	\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
 
 	\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-	%uncomment if require: \path (0,504); %set diagram left start at 0, and has height of 504
+	%uncomment if require: \path (0,653); %set diagram left start at 0, and has height of 653
 
-	%Straight Lines [id:da30097346833109506] 
-	\draw    (288,35.55) -- (378,35.27) ;
-	%Straight Lines [id:da008797981126773213] 
-	\draw    (285,210.23) -- (381,210.23) ;
-	%Straight Lines [id:da3314700216551353] 
-	\draw    (12,217.23) -- (89,217) ;
-	%Straight Lines [id:da45987741268023274] 
-	\draw    (89,235) -- (285,235) ;
-	%Straight Lines [id:da5534149755576581] 
-	\draw    (381,234) -- (573,234) ;
-	%Straight Lines [id:da9040192140401628] 
-	\draw    (573.21,205.23) -- (648.21,205) ;
-	%Straight Lines [id:da6698830071965625] 
-	\draw    (567,405.23) -- (653.08,405.12) ;
-	%Straight Lines [id:da11402683700708316] 
-	\draw    (610.08,288.77) -- (610,375) ;
-	%Straight Lines [id:da02692634167959196] 
-	\draw    (294,394.23) -- (369,394) ;
-	%Straight Lines [id:da10922418320020388] 
-	\draw    (369,418) -- (567,418) ;
-	%Straight Lines [id:da7763859064198454] 
-	\draw    (25.21,397.23) -- (73.21,397) ;
-	%Straight Lines [id:da6052246686221312] 
-	\draw    (73.21,417) -- (294.21,417) ;
-	%Straight Lines [id:da2552511917773751] 
-	\draw    (333.08,94.77) -- (333,181) ;
+	%Straight Lines [id:da43139336388917227] 
+	\draw    (20,286) -- (98,286) ;
+	%Straight Lines [id:da4834284295403961] 
+	\draw    (282,270) -- (378,270) ;
+	%Straight Lines [id:da10761222840211937] 
+	\draw    (304,26) -- (357,26) ;
+	%Straight Lines [id:da7255206002748934] 
+	\draw    (553,274) -- (636.88,273.85) ;
+	%Straight Lines [id:da6995347636449339] 
+	\draw    (537.82,26.88) -- (649,27) ;
+	%Straight Lines [id:da9523894723443324] 
+	\draw    (33,484) -- (80.88,483.85) ;
+	%Straight Lines [id:da22513051522654337] 
+	\draw    (289,469) -- (366.88,468.85) ;
+	%Straight Lines [id:da07760638923345364] 
+	\draw    (549,506) -- (640,506) ;
+	%Straight Lines [id:da5775438824489482] 
+	\draw    (98,304) -- (282,304.8) ;
+	%Straight Lines [id:da4262009384989398] 
+	\draw    (378,305) -- (553,305.8) ;
+	%Straight Lines [id:da5168381269792842] 
+	\draw    (367,508.2) -- (549,509) ;
+	%Straight Lines [id:da8759115752898501] 
+	\draw    (81,507) -- (289,507.8) ;
+	%Straight Lines [id:da831087986862331] 
+	\draw    (594,476.5) -- (594,360.5) ;
+	%Straight Lines [id:da19235984180779042] 
+	\draw    (330,240) -- (330,70) ;
+	%Straight Lines [id:da5249140419115729] 
+	\draw    (593,251) -- (593,135) ;
 
 	% Text Node
-	\draw    (288.01,7) -- (378.01,7) -- (378.01,95) -- (288.01,95) -- cycle  ;
-	\draw (333.01,11) node [anchor=north] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{58.49pt}\setlength\topsep{0pt}
+	\draw    (20,261) -- (98,261) -- (98,349) -- (20,349) -- cycle  ;
+	\draw (23,265) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{50.37pt}\setlength\topsep{0pt}
 	\begin{center}
-	Transaction \\\underline{tId}\\appId\\fee
+	Customer\\\underline{cust\_id}\\first\_name\\last\_name
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw    (285.22,180.5) -- (381.22,180.5) -- (381.22,289.5) -- (285.22,289.5) -- cycle  ;
-	\draw (333.22,184.5) node [anchor=north] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{62.85pt}\setlength\topsep{0pt}
+	\draw    (282,240) -- (378,240) -- (378,370) -- (282,370) -- cycle  ;
+	\draw (285,244) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{62.85pt}\setlength\topsep{0pt}
 	\begin{center}
-	Appointment \\\underline{appId}\\cid\\sid\\date
+	Appointment \\\underline{app\_id}\\cust\_id\\service\_id\\app\_date\\success
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw    (11.79,191.5) -- (88.79,191.5) -- (88.79,279.5) -- (11.79,279.5) -- cycle  ;
-	\draw (14.79,235.5) node [anchor=west] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{49.79pt}\setlength\topsep{0pt}
+	\draw    (304,3) -- (357,3) -- (357,70) -- (304,70) -- cycle  ;
+	\draw (307,7) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{33.38pt}\setlength\topsep{0pt}
 	\begin{center}
-	Customer \\\underline{cId}\\name\\address
+	Xact\\\underline{app\_id}\\fee
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw (158.8,215) node [anchor=north west][inner sep=0.75pt]   [align=left] {custApp};
-	% Text Node
-	\draw (91,238) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
-	% Text Node
-	\draw (251,237) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...*$};
-	% Text Node
-	\draw (444.8,213) node [anchor=north west][inner sep=0.75pt]   [align=left] {appService};
-	% Text Node
-	\draw (383,237) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...*$};
-	% Text Node
-	\draw (539,236) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
-	% Text Node
-	\draw    (573,179.5) -- (648,179.5) -- (648,288.5) -- (573,288.5) -- cycle  ;
-	\draw (576,234) node [anchor=west] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{48.1pt}\setlength\topsep{0pt}
+	\draw    (553,251) -- (637,251) -- (637,360) -- (553,360) -- cycle  ;
+	\draw (556,255) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{54.34pt}\setlength\topsep{0pt}
 	\begin{center}
-	Service\\\underline{sId}\\type\\issueDate\\expDate
+	Service\\\underline{service\_id}\\name\\fee\\years\_valid
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw    (567,375) -- (653,375) -- (653,463) -- (567,463) -- cycle  ;
-	\draw (570,419) node [anchor=west] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{56.04pt}\setlength\topsep{0pt}
+	\draw    (538,5) -- (649,5) -- (649,135) -- (538,135) -- cycle  ;
+	\draw (541,9) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{72.52pt}\setlength\topsep{0pt}
 	\begin{center}
-	Department\\\underline{dId}\\superId\\name
+	Document\\\underline{docid}\\service\_id\\cust\_id\\issue\_date\\expiration\_date
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw (611,291) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...4$};
-	% Text Node
-	\draw (611,355) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
-	% Text Node
-	\draw (526.8,323) node [anchor=north west][inner sep=0.75pt]   [align=left] {deptService};
-	% Text Node
-	\draw    (293.79,363.5) -- (368.79,363.5) -- (368.79,472.5) -- (293.79,472.5) -- cycle  ;
-	\draw (296.79,418) node [anchor=west] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{48.1pt}\setlength\topsep{0pt}
+	\draw    (33,462) -- (81,462) -- (81,550) -- (33,550) -- cycle  ;
+	\draw (36,466) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{29.94pt}\setlength\topsep{0pt}
 	\begin{center}
-	Employee\\\underline{eId}\\jId\\dId\\name
+	Job\\\underline{jid}\\title\\salary
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw (438.8,397) node [anchor=north west][inner sep=0.75pt]   [align=left] {empDept};
-	% Text Node
-	\draw (377,421) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...1$};
-	% Text Node
-	\draw (533,420) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
-	% Text Node
-	\draw    (25,372.5) -- (73,372.5) -- (73,460.5) -- (25,460.5) -- cycle  ;
-	\draw (28,416.5) node [anchor=west] [inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{29.94pt}\setlength\topsep{0pt}
+	\draw    (289,444) -- (367,444) -- (367,574) -- (289,574) -- cycle  ;
+	\draw (292,448) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{50.37pt}\setlength\topsep{0pt}
 	\begin{center}
-	Job\\\underline{jId}\\title\\salary
+	Employee\\\underline{eid}\\jid\\did\\first\_name\\last\_name
 	\end{center}
 
 	\end{minipage}};
 	% Text Node
-	\draw (158.01,397) node [anchor=north west][inner sep=0.75pt]   [align=left] {empJob};
+	\draw    (549,477) -- (640,477) -- (640,544) -- (549,544) -- cycle  ;
+	\draw (552,481) node [anchor=north west][inner sep=0.75pt]   [align=left] {\begin{minipage}[lt]{58.88pt}\setlength\topsep{0pt}
+	\begin{center}
+	Department \\\underline{did}\\name
+	\end{center}
+
+	\end{minipage}};
 	% Text Node
-	\draw (74.21,420) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	\draw (164,285) node [anchor=north west][inner sep=0.75pt]   [align=left] {custApp};
 	% Text Node
-	\draw (260.21,419) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	\draw (307,143) node [anchor=north west][inner sep=0.75pt]   [align=left] {log};
 	% Text Node
-	\draw (334,97) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
+	\draw (441,287) node [anchor=north west][inner sep=0.75pt]   [align=left] {appService};
 	% Text Node
-	\draw (334,161) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	\draw (511,408) node [anchor=north west][inner sep=0.75pt]   [align=left] {deptService};
 	% Text Node
-	\draw (309.8,130) node [anchor=north west][inner sep=0.75pt]   [align=left] {log};
+	\draw (425,490) node [anchor=north west][inner sep=0.75pt]   [align=left] {empDept};
+	% Text Node
+	\draw (159,488) node [anchor=north west][inner sep=0.75pt]   [align=left] {empJob};
+	% Text Node
+	\draw (100,307) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
+	% Text Node
+	\draw (332,73) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
+	% Text Node
+	\draw (519,308) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
+	% Text Node
+	\draw (515,511) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...*$};
+	% Text Node
+	\draw (331,219) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	% Text Node
+	\draw (256,510) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	% Text Node
+	\draw (83,510) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	% Text Node
+	\draw (595,457) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...1$};
+	% Text Node
+	\draw (596,363.5) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...4$};
+	% Text Node
+	\draw (380,308) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...*$};
+	% Text Node
+	\draw (248,307) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...*$};
+	% Text Node
+	\draw (369,511.2) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 0...1$};
+	% Text Node
+	\draw (516,181) node [anchor=north west][inner sep=0.75pt]   [align=left] {serviceDoc};
+	% Text Node
+	\draw (595,137) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...*$};
+	% Text Node
+	\draw (594,230) node [anchor=north west][inner sep=0.75pt]   [align=left] {$\displaystyle 1...*$};
 	\end{tikzpicture}
-
 \end{minipage}}
 
 \newpage
@@ -228,7 +244,7 @@ Service
 Document
 \begin{tabular}[l]{|c|c|c|c|c|}
 	\hline
-	\ul{did} &service\_id &cust\_id &issue\_date &expiration\_date\\
+	\ul{docid} &service\_id &cust\_id &issue\_date &expiration\_date\\
 	\hline
 \end{tabular}\\
 

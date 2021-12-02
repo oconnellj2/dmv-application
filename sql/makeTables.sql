@@ -61,12 +61,12 @@ CREATE TABLE Service (
 );
 
 CREATE TABLE Document (
-	did number not null,
+	docid number not null,
 	service_id number, 
 	cust_id number,
 	issue_date date not null,
 	expiration_date date not null,
-	primary key(did)
+	primary key(docid)
 );
 
 /*
