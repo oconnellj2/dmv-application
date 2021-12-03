@@ -32,8 +32,7 @@ import java.util.Scanner;
  *        $ java Prog4 <username> <password>
  * 
  * @Example
- *           $ export
- *           CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
+ *           $ export CLASSPATH=/usr/lib/oracle/19.8/client64/lib/ojdbc8.jar:${CLASSPATH}
  *           $ javac Prog4.java
  *           $ java Prog4 <username> <password>
  */
