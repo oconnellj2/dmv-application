@@ -56,14 +56,25 @@ public class Prog4 {
 			"[15] Update a service.\n" +
 			"Enter 1-15 to make a query, or type exit.\n";
 	// Queries.
-	private static final String q1 = "";
+	private static final String q1 = "select c.cust_id, first_name, last_name, issue_date, expiration_date" +
+						"from document d, customer c " +
+						"where d.cust_id = c.cust_id and " +
+						"service_id = 4 and " +
+						"expiration_date < to_date(%s, 'MM/DD/YYYY'); ";
 	private static final String q2 = "select name, count(success) " +
 						"from Appointment, Service " +
 						"where Appointment.service_id = Service.service_id " +
 						"and success = 0 " +
 						"and app_date > app_date - 30 " +
 						"group by name";
-	private static final String q3 = "";
+	private static final String q3 = "select d.name, sum(fee) " +
+						"from service s, department d, document d " +
+						"where d.service_id = s.service_id " +
+						"and s.service_id = d.did " +
+						"and d.expiration_date between to_date('%s', 'MM/YYYY') and " +
+						"to_date('%s', 'MM/YYYY') " +
+						"group by d.name " +
+						"order by sum(fee) desc;";
 	private static final String q4 = "select salary from Job, Employee " +
 						"where Job.jid = Employee.jid and " +
 						"Employee.first_name = '%s' and Employee.last_name = '%s'";
@@ -340,6 +351,7 @@ public class Prog4 {
 	private static void insertApp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
 		// Get user id.
 		String id = null;
+		String service_id = null;
 		while (true) {
 			System.out.print("Enter user ID: ");
 			id = input.nextLine();
@@ -350,6 +362,28 @@ public class Prog4 {
 			} catch (NumberFormatException e) {
 				System.err.println("Error:\tInvalid user ID!");
 			}
+		}
+		while (true) {
+			System.out.print("Enter service ID: 1 for Permit, 2 for License, 3 for Registration, 4 for StateId");
+			service_id = input.nextLine();
+			// Validate user id.
+			try {
+				Integer.parseInt(service_id);
+				break;
+			} catch (NumberFormatException e) {
+				System.err.println("Error:\tInvalid user ID!");
+			}
+		}
+		if (service_id.equals("1")) {
+				
+		} else if (service_id.equals("2")) {
+			
+		} else if (service_id.equals("3")) {
+
+		} else if (service_id.equals("4")) {
+		
+		} else {
+			
 		}
 		// TODO: Implement insert appointment.
 		String query = "";
