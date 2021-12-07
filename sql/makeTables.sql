@@ -64,7 +64,6 @@ CREATE TABLE Document (
 	docid number not null,
 	service_id number, 
 	cust_id number,
-	issue_date date not null,
 	expiration_date date not null,
 	primary key(docid)
 );
@@ -214,4 +213,5 @@ GRANT SELECT ON Department TO PUBLIC;
 @ insertCustomer
 @ insertService
 @ insertEmployeeAndDepartment
-@ insertAppointment
+@ insertAppointment  
+
