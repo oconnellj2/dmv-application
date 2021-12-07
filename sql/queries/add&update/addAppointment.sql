@@ -18,8 +18,8 @@ where app_id = %s;
 
 /*Update appointment*/
 update Appointment
-set app_date = "%"
-set success = "%"
-where app_id = "%s";
+set app_date = '01/14/2021'
+set success = 1
+where app_id = 1;
 
 

@@ -7,5 +7,5 @@ delete from Employee
 where eid = %s;
 
 UPDATE Job
-SET salaray = "%s"
+SET salary = "%s"
 WHERE jid = "%s";

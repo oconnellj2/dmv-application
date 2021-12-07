@@ -5,3 +5,7 @@ insert into service values (service_seq.nextval, %s, %s, %s);
 /* Delete */
 delete from service
 where name = %s;
+
+/* Update */
+update service
+set fee = "%s";
