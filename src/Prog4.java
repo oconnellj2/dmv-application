@@ -449,6 +449,42 @@ public class Prog4 {
 	}
 
 	/**
+	 * Execute query to check if a customer has a drivers license.
+	 * 
+	 * @param dbconn - Current connection with database.
+	 * @param stmt   - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param id - Customer ID.
+	 */
+	private static boolean hasOne(Connection dbconn, Statement stmt, ResultSet answer, String id) {
+		try {
+			// Execute query to check if user has a drivers license.
+			String appIdQuery = "select count(service_id) from document where service_id = 2 and cust_id = "+id;
+			stmt = dbconn.createStatement();
+			answer = stmt.executeQuery(appIdQuery);
+			if (answer != null) {
+				answer.next();
+				// Check count of license.
+				if(answer.getString(1).equals("1")) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				System.out.println("No result returned from query!");
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println("*** SQLException:  "
+					+ "Could not fetch query results.");
+			System.err.println("\tMessage:   " + e.getMessage());
+			System.err.println("\tSQLState:  " + e.getSQLState());
+			System.err.println("\tErrorCode: " + e.getErrorCode());
+			System.exit(-1);
+		}
+		return false;
+	}
+	/**
 	 * Execute appointment insert from user.
 	 * 
 	 * @param dbconn - Current connection with database.
@@ -479,6 +515,11 @@ public class Prog4 {
 			try {
 				int val = Integer.parseInt(service_id);
 				if(val > 0 && val < 5) {
+					// Check to make sure user has only one drivers license.
+					if(val == 2 && hasOne(dbconn, stmt, answer, id)){
+						System.err.println("Error:\tUser already has a Drivers license!");
+						continue;
+					}
 					break;
 				} else {
 					System.err.println("Error:\tInvalid user ID!");
