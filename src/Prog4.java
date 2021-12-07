@@ -646,7 +646,7 @@ public class Prog4 {
 		System.out.print("Enter last name: ");
 		String lastName = input.nextLine();
 
-		String query = "insert into customer values (customer_seq.nextval, " + firstName + ", " + lastName + ") ";
+		String query = "insert into customer values (customer_seq.nextval, '" + firstName + "' , '" + lastName + "')";
 		execute(dbconn, stmt, query);
 	}
 
@@ -676,13 +676,17 @@ public class Prog4 {
 	 * @param input  - Scanner used to get school name from the user.
 	 */
 	private static void insertEmp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-		// Get job and dept id.
+		// Get job aSystem.out.print("Enter Job ID: ");
 		System.out.print("Enter Job ID: ");
 		String jobId = input.nextLine();
 		System.out.print("Enter Department ID: ");
 		String deptId = input.nextLine();
+		System.out.print("Enter First Name: ");
+		String firstName = input.nextLine();
+		System.out.print("Enter Last Name: ");
+		String lastName = input.nextLine();
 
-		String query = "insert into Employee values (employee_seq.nextval, 1, 1, " + jobId + ", " + deptId + ")";
+		String query = "insert into Employee values (employee_seq.nextval, " + jobId + ", " + deptId + ", '" + firstName + "', '" + lastName + "')";
 		execute(dbconn, stmt, query);
 	}
 
@@ -759,7 +763,7 @@ public class Prog4 {
 		System.out.print("Enter number of years vaild: ");
 		String lifetime = input.nextLine();
 
-		String query = "insert into service values (service_seq.nextval, " + svcName + ", " + fee + ", " + lifetime
+		String query = "insert into service values (service_seq.nextval, '" + svcName + "', " + fee + ", " + lifetime
 				+ ")";
 		execute(dbconn, stmt, query);
 	}
@@ -777,7 +781,7 @@ public class Prog4 {
 		System.out.print("Enter Service name: ");
 		String svcName = input.nextLine();
 
-		String query = "delete from service where name = " + svcName;
+		String query = "delete from service where name = '" + svcName + "'";
 		execute(dbconn, stmt, query);
 	}
 
