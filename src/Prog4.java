@@ -344,7 +344,7 @@ public class Prog4 {
 	}
 
 	/**
-	 * Execute my custom query on the database and output results to the user.
+	 * Execute custom query on the database and output results to the user.
 	 * 
 	 * @param dbconn - Current connection with database.
 	 * @param stmt   - Object used to execture SQL.
@@ -381,6 +381,74 @@ public class Prog4 {
 	}
 
 	/**
+	 * Execute query to get the number of years a given service is valid for..
+	 * 
+	 * @param dbconn - Current connection with database.
+	 * @param stmt   - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 * @param id  - Integer representing a service id.
+	 */
+	private static int[] getServiceInfo(Connection dbconn, Statement stmt, ResultSet answer, String id) {
+		int[] retval = {0, 0};
+		try {
+			// Execute query to get years vaild for service document.
+			String query = "select years_valid, fee from service where service_id = "+id;
+			stmt = dbconn.createStatement();
+			answer = stmt.executeQuery(query);
+			if (answer != null) {
+				answer.next();
+				// Get years.
+				retval[0] = Integer.parseInt(answer.getString(1));
+				retval[1] = Integer.parseInt(answer.getString(2));
+			} else {
+				System.out.println("No result returned from query!");
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println("*** SQLException:  "
+					+ "Could not fetch query results.");
+			System.err.println("\tMessage:   " + e.getMessage());
+			System.err.println("\tSQLState:  " + e.getSQLState());
+			System.err.println("\tErrorCode: " + e.getErrorCode());
+			System.exit(-1);
+		}
+		return retval;
+	}
+
+	/**
+	 * Execute query to get the number of years a given service is valid for..
+	 * 
+	 * @param dbconn - Current connection with database.
+	 * @param stmt   - Object used to execture SQL.
+	 * @param answer - Table of data representing the result of the query.
+	 */
+	private static int getAppId(Connection dbconn, Statement stmt, ResultSet answer) {
+		int retval = 0;
+		try {
+			// Execute query to get the next appointment ID.
+			String appIdQuery = "select max(app_id) from appointment";
+			stmt = dbconn.createStatement();
+			answer = stmt.executeQuery(appIdQuery);
+			if (answer != null) {
+				answer.next();
+				// Get app id.
+				retval = Integer.parseInt(answer.getString(1));
+			} else {
+				System.out.println("No result returned from query!");
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println("*** SQLException:  "
+					+ "Could not fetch query results.");
+			System.err.println("\tMessage:   " + e.getMessage());
+			System.err.println("\tSQLState:  " + e.getSQLState());
+			System.err.println("\tErrorCode: " + e.getErrorCode());
+			System.exit(-1);
+		}
+		return retval;
+	}
+
+	/**
 	 * Execute appointment insert from user.
 	 * 
 	 * @param dbconn - Current connection with database.
@@ -389,9 +457,10 @@ public class Prog4 {
 	 * @param input  - Scanner used to get school name from the user.
 	 */
 	private static void insertApp(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-		// Get user id.
+		// Get user id, service id and date.
 		String id = null;
 		String service_id = null;
+		String date = null;
 		while (true) {
 			System.out.print("Enter user ID: ");
 			id = input.nextLine();
@@ -404,30 +473,50 @@ public class Prog4 {
 			}
 		}
 		while (true) {
-			System.out.print("Enter service ID: 1 for Permit, 2 for License, 3 for Registration, 4 for StateId");
+			System.out.print("Enter service ID(1-Permit, 2-License, 3-Registration, 4-StateId): ");
 			service_id = input.nextLine();
-			// Validate user id.
+			// Validate service id.
 			try {
-				Integer.parseInt(service_id);
-				break;
+				int val = Integer.parseInt(service_id);
+				if(val > 0 && val < 5) {
+					break;
+				} else {
+					System.err.println("Error:\tInvalid user ID!");
+					continue;
+				}
 			} catch (NumberFormatException e) {
 				System.err.println("Error:\tInvalid user ID!");
 			}
 		}
-		if (service_id.equals("1")) {
-				
-		} else if (service_id.equals("2")) {
-			
-		} else if (service_id.equals("3")) {
-
-		} else if (service_id.equals("4")) {
-		
-		} else {
-			
+		while (true) {
+			System.out.print("Enter date(MM/DD/YYYY): ");
+			date = input.nextLine();
+			DateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			sdf.setLenient(false);
+			try {
+				sdf.parse(date);
+			} catch (ParseException e) {
+				System.err.println("Error:\tEnter a vaild date!");
+				continue;
+			}
+			break;
 		}
-		// TODO: Implement insert appointment.
-		String query = "";
-		execute(dbconn, stmt, query);
+		// Compute end date from lifetime of document.
+		int[] info = getServiceInfo(dbconn, stmt, answer, service_id);
+		String endYear = String.valueOf(Integer.parseInt(date.split("/")[2])+info[0]);
+		String endDate = date.split("/")[0]+"/"+date.split("/")[1]+"/"+endYear;
+
+		// Insert appointment and get appointment id.
+		String appt = "insert into Appointment values (appointment_seq.nextval, "+id+", "+service_id+", to_date('"+date+"', 'MM/DD/YYYY'), 1)";
+		execute(dbconn, stmt, appt);
+		int app_id = getAppId(dbconn, stmt, answer);
+		// Get fee info for service and insert transation.
+		int fee = info[1];
+		String xAct = "insert into Xact values (xact_seq.nextval, "+app_id+", "+fee+")";
+		execute(dbconn, stmt, xAct);
+		// Insert document.
+		String doc = "insert into Document values (document_seq.nextval, "+service_id+", "+id+", to_date('"+date+"', 'MM/DD/YYYY'), to_date('"+endDate+"', 'MM/DD/YYYY'))";
+		execute(dbconn, stmt, doc);
 	}
 
 	/**
