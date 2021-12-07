@@ -61,7 +61,7 @@ public class Prog4 {
 						"where d.cust_id = c.cust_id and " +
 						"service_id = 4 and " +
 						"expiration_date < to_date('%s', 'MM/DD/YYYY')";
-	private static final String q2 = "select name, count(success) " +
+	private static final String q2 = "select name, count(success) as Failed " +
 						"from Appointment, Service " +
 						"where Appointment.service_id = Service.service_id " +
 						"and success = 0 " +
@@ -381,7 +381,7 @@ public class Prog4 {
 	}
 
 	/**
-	 * Execute query to get the number of years a given service is valid for..
+	 * Execute query to get the number of years and fee of a given service.
 	 * 
 	 * @param dbconn - Current connection with database.
 	 * @param stmt   - Object used to execture SQL.
@@ -416,7 +416,7 @@ public class Prog4 {
 	}
 
 	/**
-	 * Execute query to get the number of years a given service is valid for..
+	 * Execute query to get the appointment id.
 	 * 
 	 * @param dbconn - Current connection with database.
 	 * @param stmt   - Object used to execture SQL.
@@ -505,7 +505,6 @@ public class Prog4 {
 		int[] info = getServiceInfo(dbconn, stmt, answer, service_id);
 		String endYear = String.valueOf(Integer.parseInt(date.split("/")[2])+info[0]);
 		String endDate = date.split("/")[0]+"/"+date.split("/")[1]+"/"+endYear;
-
 		// Insert appointment and get appointment id.
 		String appt = "insert into Appointment values (appointment_seq.nextval, "+id+", "+service_id+", to_date('"+date+"', 'MM/DD/YYYY'), 1)";
 		execute(dbconn, stmt, appt);
@@ -750,7 +749,40 @@ public class Prog4 {
 	 * @param input  - Scanner used to get school name from the user.
 	 */
 	private static void updateSvc(Connection dbconn, Statement stmt, ResultSet answer, Scanner input) {
-		// TODO: Implement update service.
+		String fee = null;
+		String service_id = null;
+		// Get service id from user.
+		while (true) {
+			System.out.print("Enter service ID(1-Permit, 2-License, 3-Registration, 4-StateId): ");
+			service_id = input.nextLine();
+			// Validate service id.
+			try {
+				int val = Integer.parseInt(service_id);
+				if(val > 0 && val < 5) {
+					break;
+				} else {
+					System.err.println("Error:\tInvalid user ID!");
+					continue;
+				}
+			} catch (NumberFormatException e) {
+				System.err.println("Error:\tInvalid user ID!");
+			}
+		}
+		// Get fee from user.
+		while (true) {
+			System.out.print("Enter a Fee: ");
+			fee = input.nextLine();
+			// Validate salary.
+			try {
+				Integer.parseInt(fee);
+				break;
+			} catch (NumberFormatException e) {
+				System.err.println("Error:\tInvalid Fee value!");
+			}
+		}
+		// Execute update.
+		String query = "update service set fee = "+fee+" where service_id = "+service_id;
+		execute(dbconn, stmt, query);
 	}
 
 	/**
