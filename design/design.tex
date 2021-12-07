@@ -274,6 +274,67 @@ Department
 
 \newpage
 \section*{3 Normalization analysis}
+\ul{Customer}:\\
+cust\_id$\rightarrow$first\_name\\
+cust\_id$\rightarrow$last\_name\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{cust\_id} is a super key of the relation.
+
+\ul{Appointment}:\\
+app\_id$\rightarrow$cust\_id\\
+app\_id$\rightarrow$service\_id\\
+app\_id$\rightarrow$app\_app\_date\\
+app\_id$\rightarrow$success\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{app\_id} is a super key of the relation.
+
+\ul{Xact}:\\
+xact\_id$\rightarrow$app\_id\\
+xact\_id$\rightarrow$fee\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{xact\_id} is a super key of the relation.
+
+\ul{Service}:\\
+service\_id$\rightarrow$name\\
+service\_id$\rightarrow$fee\\
+service\_id$\rightarrow$years\_valid\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{service\_id} is a super key of the relation.
+
+\ul{Document}:\\
+doc\_id$\rightarrow$service\_id\\
+doc\_id$\rightarrow$cust\_id\\
+doc\_id$\rightarrow$expiration\_date\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{doc\_id} is a super key of the relation.
+
+\newpage
+\ul{Job}:\\
+jid$\rightarrow$title\\
+jid$\rightarrow$salary\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{jid} is a super key of the relation.
+
+\ul{Employee}:\\
+eid$\rightarrow$jid\\
+eid$\rightarrow$did\\
+eid$\rightarrow$first\_name\\
+eid$\rightarrow$last\_name\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{eid} is a super key of the relation.
+
+\ul{Department}:\\
+did$\rightarrow$name\\
+1NF: Becasue its attributes are not set-valued.\\
+2NF: Every non-prime attribute is fully functionally dependent upon every CK.\\
+3NF + BCNF: In both FDs \ul{did} is a super key of the relation.
 
 \newpage
 \section*{4 Query description}
